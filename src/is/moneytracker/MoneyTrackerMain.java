@@ -9,6 +9,13 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
+/**
+ * Main Money Tracker
+ *
+ * @author Van-Duyet Le
+ * @version 0.1
+ * @since 2015
+ */
 public class MoneyTrackerMain extends Application {
 
     private Stage primaryStage;
