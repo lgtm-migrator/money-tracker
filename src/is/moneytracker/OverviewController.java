@@ -13,6 +13,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -33,6 +35,11 @@ public class OverviewController {
 
 	private FXMLLoader loader;
 
+	@FXML private TableView mainTable;
+
+	// Table Column
+	@FXML private TableColumn<String, String> mainTableColumnStt;
+	@FXML private TableColumn<String, String> mainTableColumnPrice;
 	/**
 	 * Constructor
 	 */
@@ -52,6 +59,10 @@ public class OverviewController {
 	}
 
 	private void initialOverController() {
+		this.openAddMoneyForm();
+	}
+
+	public void openAddMoneyForm() {
 		// Load default left panel
 		AddMoneyFormController addForm = new AddMoneyFormController();
 		addForm.setMainApp(mainApp);
@@ -106,10 +117,22 @@ public class OverviewController {
 		return this.mainApp;
 	}
 
+	// ================================
+	// Context menu
+	// ================================
 	/**
 	 * Add record
 	 */
 	public void addAction() {
-		System.out.println("Adddd");
+		this.openAddMoneyForm();
+	}
+
+	public void exitAction() throws Exception {
+		this.getMainApp().closeMoneyTracker();
+	}
+
+	public void aboutAction() {
+		System.out.println("About...");
+		this.getMainApp().aboutMoneyTracker();
 	}
 }
