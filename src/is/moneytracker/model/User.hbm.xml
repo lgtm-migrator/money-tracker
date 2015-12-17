@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping">
+<hibernate-mapping>
+	<class name="is.moneytracker.model.User" table="Users">
+		<id name="id" type="long">
+			<column name="id" not-null="true"/>
+			<generator class="identity"/>
+		</id>
+		<property column="name" name="name" type="string" />
+		<property column="username" name="username" type="string" />
+		<property column="password" name="password" type="string" />
+		<property column="status" name="status" type="string" />
+	</class>
+</hibernate-mapping>

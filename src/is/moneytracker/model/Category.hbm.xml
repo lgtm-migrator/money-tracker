@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping">
+<hibernate-mapping>
+	<class name="is.moneytracker.model.Wallet" table="Wallets">
+		<id name="id" type="int">
+			<column name="id" not-null="true"/>
+			<generator class="identity"/>
+		</id>
+		<property column="name" name="name" type="string" />
+		<property column="image" name="image" type="string" />
+		<property column="description" name="description" type="string" />
+	</class>
+</hibernate-mapping>

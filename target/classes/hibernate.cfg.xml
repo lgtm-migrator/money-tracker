@@ -1,16 +1,19 @@
-<!--?xml version="1.0" encoding="UTF-8"?-->
+<!--?xml version="1.0" encoding="UTF-8"? -->
 
 <hibernate-configuration>
-    <session-factory>
-        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password"></property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/moneytracker</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
-    	<property name="show_sql">true</property>
-    	<property name="connection.pool_size">1</property>
+	<session-factory>
+		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="hibernate.connection.username">root</property>
+		<property name="hibernate.connection.password"></property>
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/moneytracker?autoReconnect&amp;useUnicode=true&amp;characterEncoding=utf8
+		</property>
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+		<property name="show_sql">true</property>
+		<property name="format_sql">true</property>
+		<property name="hbm2ddl.auto">update</property>
+		<property name="connection.pool_size">100</property>
 
-    	<mapping class="com.hib.entities.Student"></mapping>
+		<mapping resource="is/moneytracker/model/User.hbm.xml"></mapping>
 
-    </session-factory>
+	</session-factory>
 </hibernate-configuration>
