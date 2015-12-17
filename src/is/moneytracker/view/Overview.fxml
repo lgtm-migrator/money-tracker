@@ -12,14 +12,14 @@
 <AnchorPane fx:id="mainOverview" prefHeight="500.0"
 	prefWidth="650.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-		<SplitPane dividerPositions="0.3" prefHeight="650.0"
+		<SplitPane fx:id="splitPane" dividerPositions="0.3" prefHeight="650.0"
 			prefWidth="450.0" AnchorPane.bottomAnchor="0.0"
 			AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
 			AnchorPane.topAnchor="0.0">
 			<items>
-				<AnchorPane id="leftPanel" fx:id="leftFrame" minHeight="0.0"
+				<AnchorPane id="leftPanel" fx:id="leftPanel" minHeight="0.0"
 					minWidth="0.0" prefHeight="498.0" prefWidth="198.0" />
-				<AnchorPane fx:id="rightFrame" minHeight="0.0" minWidth="0.0"
+				<AnchorPane fx:id="rightPanel" minHeight="0.0" minWidth="0.0"
 					prefHeight="160.0">
 					<children>
 						<SplitPane dividerPositions="0.08204334365325078"

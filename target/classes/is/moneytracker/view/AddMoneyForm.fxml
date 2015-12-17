@@ -16,21 +16,23 @@
         </columnConstraints>
         <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="58.0" minHeight="6.0" prefHeight="33.0" vgrow="SOMETIMES" />
           <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="27.0" vgrow="ALWAYS" />
             <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS" />
         </rowConstraints>
          <children>
-            <TextField fx:id="form_price" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label prefHeight="17.0" prefWidth="97.0" text="Số tiền" GridPane.rowIndex="1" />
-            <Label prefHeight="17.0" prefWidth="97.0" text="Ngày" GridPane.rowIndex="2" />
-            <DatePicker fx:id="form_date" promptText="Chọn" showWeekNumbers="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label text="Ghi chú" GridPane.rowIndex="3" />
-            <Label text="Loại" />
-            <ComboBox fx:id="form_trans_type" blendMode="SRC_ATOP" cache="true" cacheHint="SPEED" prefWidth="150.0" promptText="Loại giao dịch..." GridPane.columnIndex="1" />
-            <TextArea fx:id="form_note" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <ToggleButton fx:id="form_add_button" mnemonicParsing="false" onAction="#saveFormData" text="[+] Thêm" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+            <TextField fx:id="form_price" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label prefHeight="17.0" prefWidth="97.0" text="Số tiền" GridPane.rowIndex="2" />
+            <Label prefHeight="17.0" prefWidth="97.0" text="Ngày" GridPane.rowIndex="3" />
+            <DatePicker fx:id="form_date" promptText="Chọn" showWeekNumbers="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="Ghi chú" GridPane.rowIndex="4" />
+            <Label text="Loại" GridPane.rowIndex="1" />
+            <ComboBox fx:id="form_cat" blendMode="SRC_ATOP" cache="true" cacheHint="SPEED" prefWidth="150.0" promptText="Loại giao dịch..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextArea fx:id="form_note" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <ComboBox fx:id="form_trans_type" blendMode="SRC_ATOP" cache="true" cacheHint="SPEED" prefWidth="150.0" promptText="In / Out" GridPane.columnIndex="1" />
+            <Button fx:id="form_submit_btn" mnemonicParsing="false" text="Thêm" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
          </children>
       </GridPane>
    </children>

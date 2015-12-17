@@ -6,6 +6,9 @@ package is.moneytracker;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.spi.ServiceException;
+
+import com.mysql.jdbc.CommunicationsException;
 
 /**
  * @author Van-Duyet Le
@@ -16,7 +19,7 @@ public class ConnectionFactory {
 	private SessionFactory factory;
 	private Session session;
 
-	public ConnectionFactory() {
+	public ConnectionFactory() throws ServiceException {
 		this.cfg = new Configuration();
 	    this.cfg.configure("hibernate.cfg.xml");
 

@@ -3,6 +3,10 @@ package is.moneytracker;
 import java.io.IOException;
 import java.util.Optional;
 
+import org.hibernate.service.spi.ServiceException;
+
+import com.mysql.jdbc.CommunicationsException;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
@@ -49,7 +53,12 @@ public class MoneyTrackerMain extends Application {
 
 	public boolean initConnection() {
 		// Init connection
-		connection = new ConnectionFactory();
+		try {
+			connection = new ConnectionFactory();
+		} catch (ServiceException e) {
+			Message.Error("Không thể kết nối máy chủ CSDL...");
+			return false;
+		}
 
 		if (connection != null) return true;
 		return false;
@@ -87,6 +96,8 @@ public class MoneyTrackerMain extends Application {
 		AnchorPane panel = overview.getAnchor();
 
 		rootLayout.setCenter(panel);
+
+		initConnection();
 	}
 
 	/**
