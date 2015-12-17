@@ -4,7 +4,6 @@
 package is.moneytracker.model;
 
 import org.hibernate.type.DateType;
-import org.hibernate.type.TextType;
 
 /**
  * @author Van-Duyet Le
@@ -18,7 +17,7 @@ public class Transaction {
 	private String type = "";
 	private String status = "";
 	private int price = 0;
-	private TextType note;
+	private String note;
 
 	/**
 	 * @param id
@@ -33,6 +32,29 @@ public class Transaction {
 	 */
 	public Transaction() {
 		super();
+	}
+
+	/**
+	 * @param id
+	 * @param wallet_id
+	 * @param category_id
+	 * @param created
+	 * @param type
+	 * @param status
+	 * @param price
+	 * @param note
+	 */
+	public Transaction(int id, int wallet_id, int category_id, DateType created, String type, String status, int price,
+			String note) {
+		super();
+		this.id = id;
+		this.wallet_id = wallet_id;
+		this.category_id = category_id;
+		this.created = created;
+		this.type = type;
+		this.status = status;
+		this.price = price;
+		this.note = note;
 	}
 
 	/**
@@ -87,7 +109,7 @@ public class Transaction {
 	/**
 	 * @return the note
 	 */
-	public TextType getNote() {
+	public String getNote() {
 		return note;
 	}
 
@@ -143,7 +165,7 @@ public class Transaction {
 	/**
 	 * @param note the note to set
 	 */
-	public void setNote(TextType note) {
+	public void setNote(String note) {
 		this.note = note;
 	}
 

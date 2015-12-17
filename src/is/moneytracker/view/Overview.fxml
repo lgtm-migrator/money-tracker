@@ -9,54 +9,77 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="mainOverview" prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <SplitPane dividerPositions="0.3" prefHeight="650.0" prefWidth="450.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <items>
-          <AnchorPane id="leftPanel" fx:id="leftFrame" minHeight="0.0" minWidth="0.0" prefHeight="498.0" prefWidth="198.0" />
-          <AnchorPane fx:id="rightFrame" minHeight="0.0" minWidth="0.0" prefHeight="160.0">
-               <children>
-                  <SplitPane dividerPositions="0.08204334365325078" layoutX="47.0" layoutY="2.0" orientation="VERTICAL" prefHeight="648.0" prefWidth="312.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                    <items>
-                        <HBox minWidth="100.0">
-                           <children>
-                              <Button layoutY="107.0" mnemonicParsing="false" onAction="#addAction" text="[+] Thêm" textAlignment="RIGHT" HBox.hgrow="SOMETIMES">
-                                 <opaqueInsets>
-                                    <Insets />
-                                 </opaqueInsets>
-                                 <HBox.margin>
-                                    <Insets left="5.0" right="5.0" top="5.0" />
-                                 </HBox.margin>
-                              </Button>
-                           </children>
-                        </HBox>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="525.0" prefWidth="310.0">
-                           <children>
-                              <TableView fx:id="mainTable" layoutX="22.0" layoutY="14.0" prefHeight="590.0" prefWidth="310.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <columns>
-                                  <TableColumn fx:id="mainTableColumnStt" prefWidth="41.0" text="STT" />
-                                  <TableColumn fx:id="mainTableColumnPrice" prefWidth="121.0" text="\$" />
-                                    <TableColumn fx:id="mainTableColumnNote" prefWidth="102.0" text="Nội dung" />
-                                    <TableColumn fx:id="mainTableColumnDate" prefWidth="192.0" text="Ngày tháng" />
-                                    <TableColumn prefWidth="75.0" />
-                                </columns>
-                              </TableView>
-                           </children>
-                        </AnchorPane>
-                    </items>
-                  </SplitPane>
-               </children>
-            </AnchorPane>
-        </items>
-         <contextMenu>
-            <ContextMenu>
-              <items>
-                  <CheckMenuItem fx:id="context_audo_update_button" mnemonicParsing="false" text="Tự cập nhật" />
-                  <MenuItem fx:id="context_about_button" mnemonicParsing="false" onAction="#aboutAction" text="Giới thiệu" />
-                  <MenuItem fx:id="context_exit_button" mnemonicParsing="true" onAction="#exitAction" text="Thoát" />
-              </items>
-            </ContextMenu>
-         </contextMenu>
-      </SplitPane>
-   </children>
+<AnchorPane fx:id="mainOverview" prefHeight="500.0"
+	prefWidth="650.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<SplitPane dividerPositions="0.3" prefHeight="650.0"
+			prefWidth="450.0" AnchorPane.bottomAnchor="0.0"
+			AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+			AnchorPane.topAnchor="0.0">
+			<items>
+				<AnchorPane id="leftPanel" fx:id="leftFrame" minHeight="0.0"
+					minWidth="0.0" prefHeight="498.0" prefWidth="198.0" />
+				<AnchorPane fx:id="rightFrame" minHeight="0.0" minWidth="0.0"
+					prefHeight="160.0">
+					<children>
+						<SplitPane dividerPositions="0.08204334365325078"
+							layoutX="47.0" layoutY="2.0" orientation="VERTICAL" prefHeight="648.0"
+							prefWidth="312.0" AnchorPane.bottomAnchor="0.0"
+							AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+							AnchorPane.topAnchor="0.0">
+							<items>
+								<HBox minWidth="100.0">
+									<children>
+										<Button layoutY="107.0" mnemonicParsing="false"
+											onAction="#addAction" text="[+] Thêm" textAlignment="RIGHT"
+											HBox.hgrow="SOMETIMES">
+											<opaqueInsets>
+												<Insets />
+											</opaqueInsets>
+											<HBox.margin>
+												<Insets left="5.0" right="5.0" top="5.0" />
+											</HBox.margin>
+										</Button>
+									</children>
+								</HBox>
+								<AnchorPane minHeight="0.0" minWidth="0.0"
+									prefHeight="525.0" prefWidth="310.0">
+									<children>
+										<TableView fx:id="mainTable" layoutX="22.0" layoutY="14.0"
+											prefHeight="590.0" prefWidth="310.0" AnchorPane.bottomAnchor="0.0"
+											AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+											AnchorPane.topAnchor="0.0">
+											<columns>
+												<TableColumn fx:id="mainTableColumnStt"
+													prefWidth="41.0" text="STT" />
+												<TableColumn fx:id="mainTableColumnPrice"
+													prefWidth="121.0" text="\$" />
+												<TableColumn fx:id="mainTableColumnNote"
+													prefWidth="102.0" text="Nội dung" />
+												<TableColumn fx:id="mainTableColumnDate"
+													prefWidth="192.0" text="Ngày tháng" />
+												<TableColumn prefWidth="75.0" />
+											</columns>
+										</TableView>
+									</children>
+								</AnchorPane>
+							</items>
+						</SplitPane>
+					</children>
+				</AnchorPane>
+			</items>
+			<contextMenu>
+				<ContextMenu>
+					<items>
+						<CheckMenuItem fx:id="context_audo_update_button"
+							mnemonicParsing="false" text="Tự cập nhật" />
+						<MenuItem fx:id="context_about_button" mnemonicParsing="false"
+							onAction="#aboutAction" text="Giới thiệu" />
+						<MenuItem fx:id="context_exit_button" mnemonicParsing="true"
+							onAction="#exitAction" text="Thoát" />
+					</items>
+				</ContextMenu>
+			</contextMenu>
+		</SplitPane>
+	</children>
 </AnchorPane>

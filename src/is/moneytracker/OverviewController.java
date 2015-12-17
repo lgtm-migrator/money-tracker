@@ -5,12 +5,17 @@ package is.moneytracker;
 
 import java.io.IOException;
 
-import is.moneytracker.util.Message;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.mapping.List;
+import org.hibernate.type.DateType;
+
+import is.moneytracker.model.Transaction;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
@@ -35,7 +40,8 @@ public class OverviewController {
 
 	private FXMLLoader loader;
 
-	@FXML private TableView mainTable;
+	@FXML private TableView<Transaction> mainTable;
+	@FXML private ObservableList<Transaction> transactionData = FXCollections.observableArrayList();
 
 	// Table Column
 	@FXML private TableColumn<String, String> mainTableColumnStt;
@@ -45,8 +51,9 @@ public class OverviewController {
 	 */
 	public OverviewController() {
 		this.loader = new FXMLLoader(getClass().getResource("view/Overview.fxml"));
-		// this.loader.setRoot(this);
 		this.loader.setController(this);
+
+		setMainTableData();
 
 		try {
 			this.anchor = (AnchorPane) this.loader.load();
@@ -56,6 +63,18 @@ public class OverviewController {
 		} catch (IOException exception) {
 			throw new RuntimeException(exception);
 		}
+	}
+
+	public OverviewController(MoneyTrackerMain mainApp) {
+		this();
+		this.setMainApp(mainApp);
+	}
+
+	public void setMainTableData() {
+		if (mainApp == null) return;
+
+		Session s = this.mainApp.getConnection().getSession();
+
 	}
 
 	private void initialOverController() {

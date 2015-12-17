@@ -36,14 +36,23 @@ public class MoneyTrackerMain extends Application {
 	private Scene mainScene;
 	private BorderPane rootLayout;
 
+	private ConnectionFactory connection;
+
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Money Tracker v0.1 - UIT");
 
 		initRootLayout();
-
 		showMoneyTrackerOverview();
+	}
+
+	public boolean initConnection() {
+		// Init connection
+		connection = new ConnectionFactory();
+
+		if (connection != null) return true;
+		return false;
 	}
 
 	/**
@@ -73,7 +82,7 @@ public class MoneyTrackerMain extends Application {
 	 * return
 	 */
 	public void showMoneyTrackerOverview() {
-		OverviewController overview = new OverviewController();
+		OverviewController overview = new OverviewController(this);
 		overview.setMainApp(this);
 		AnchorPane panel = overview.getAnchor();
 
@@ -172,5 +181,12 @@ public class MoneyTrackerMain extends Application {
 
 	public static void main(String[] args) {
 		launch(args);
+	}
+
+	/**
+	 * @return the connection
+	 */
+	public ConnectionFactory getConnection() {
+		return connection;
 	}
 }
