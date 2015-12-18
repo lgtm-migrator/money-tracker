@@ -5,8 +5,23 @@ package is.moneytracker;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.type.DateType;
+
+import is.moneytracker.model.Category;
+import is.moneytracker.model.Transaction;
+import is.moneytracker.model.TransactionType;
+import is.moneytracker.util.Message;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,6 +31,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -32,19 +48,22 @@ public class AddMoneyFormController implements Initializable {
 	private FXMLLoader loader;
 	private AnchorPane anchor;
 
-	@FXML private ComboBox<String> form_trans_type;
-	@FXML private ComboBox<String> form_cat;
+	public static final String TRANS_INCOME = "Thu nhập";
+	public static final String TRANS_OUTCOME = "Chi tiêu";
+	private final ObservableList<TransactionType> form_trans_type_options =
+		FXCollections.observableArrayList(
+			new TransactionType("income", TRANS_INCOME),
+			new TransactionType("outcome", TRANS_OUTCOME)
+    );
+
+	@FXML private ComboBox<TransactionType> form_trans_type;
+	@FXML private ComboBox<Transaction> form_cat;
 	@FXML private TextField form_price;
 	@FXML private DatePicker form_date;
 	@FXML private TextArea form_note;
 	@FXML private Button form_submit_btn;
 
-	ObservableList<String> options =
-		    FXCollections.observableArrayList(
-		        "Option 1",
-		        "Option 2",
-		        "Option 3"
-		    );
+	@FXML private Label form_message_success;
 
 	/**
 	 * Constructor
@@ -52,11 +71,9 @@ public class AddMoneyFormController implements Initializable {
 	public AddMoneyFormController() {
 		this.loader = new FXMLLoader(getClass().getResource("view/AddMoneyForm.fxml"));
 		this.loader.setController(this);
-		initialController();
 		try {
 			this.setAnchor((AnchorPane) this.loader.load());
 
-			this.initialController();
 		} catch (IOException exception) {
 			throw new RuntimeException(exception);
 		}
@@ -64,20 +81,88 @@ public class AddMoneyFormController implements Initializable {
 
 	@Override
 	public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
-        assert form_submit_btn != null : "fx:id=\"myButton\" was not injected: check your FXML file 'simple.fxml'.";
+		this.form_trans_type.setItems(form_trans_type_options);
 
-        // initialize your logic here: all @FXML variables will have been injected
+		// Load category list
 
-		this.form_trans_type.setItems(options);
-		System.out.println(form_trans_type);
+
+		// Make price only numberic
+		this.form_price.textProperty().addListener(new ChangeListener<String>() {
+		    @Override public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+		        if (newValue.matches("\\d*")) {
+		            // int value = Integer.parseInt(newValue);
+		        } else {
+		        	form_price.setText(oldValue);
+		        }
+		    }
+		});
+
+		Session session = ConnectionFactory.getSessionFactory().openSession();
     }
 
-	private void initialController() {
+	@FXML
+	private void handleChangeTransType(ActionEvent e) {
+		TransactionType currentTrans = this.form_trans_type.getValue();
+
+		System.out.println(currentTrans.getId());
+		// Load categories
+		// this.form_cat.setItems();
 	}
 
 	@FXML
 	public void saveFormData(ActionEvent event) {
-		System.out.println(form_price.getText());
+		Transaction saver = new Transaction();
+		Session session = this.getMainApp().getSession();
+        org.hibernate.Transaction tx = null;
+        try {
+			tx = session.beginTransaction();
+			this.form_message_success.setVisible(false);
+
+			int price = 0;
+			try {
+				price = Integer.parseInt(this.form_price.getText());
+			}
+			catch (java.lang.NumberFormatException e) {
+				Message.Error("Nhập sai đơn vị tiền");
+				return;
+			}
+			saver.setPrice(price);
+			saver.setNote(this.form_note.getText());
+			try {
+				System.out.println(this.form_trans_type.getValue().getId().toString());
+				saver.setType(this.form_trans_type.getValue().getId());
+			} catch (NullPointerException e) {
+				Message.Error("Vui lòng chọn loại giao dịch");
+				return;
+			}
+
+			// TODO
+			saver.setCategory_id(0);
+			saver.setWallet_id(0);
+			saver.setCreated(new Date());
+			saver.setStatus("ok");
+
+			// Save
+			session.save(saver);
+			tx.commit();
+
+			// After save success
+			this.form_message_success.setVisible(true);
+			this.form_price.setText(null);
+			this.form_note.setText(null);
+
+			// Reload main table
+			this.getMainApp().getOverviewController().loadTableData();
+        } catch (HibernateException e) {
+           if (tx!=null) tx.rollback();
+
+           Message.Error(e.getMessage());
+           e.printStackTrace();
+        }
+	}
+
+	public void hideSuccessMessage() {
+		this.form_message_success.setVisible(false);
 	}
 
 	/**

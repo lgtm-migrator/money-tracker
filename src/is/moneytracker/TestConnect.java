@@ -10,11 +10,10 @@ import is.moneytracker.model.*;
 public class TestConnect {
 
 	public static void main(String[] args) {
-		Configuration cfg = new Configuration();
-        cfg.configure("hibernate.cfg.xml");
 
-        SessionFactory factory = cfg.buildSessionFactory();
-        Session session = factory.openSession();
+        Session session = ConnectionFactory.getSessionFactory().openSession();
+
+
         User user = new User();
         user.setName("Duyet");
         user.setUsername("duyetdev");
@@ -25,12 +24,13 @@ public class TestConnect {
 
         Transaction tx = session.beginTransaction();
         session.save(user);
+        session.save(user2);
 
 
         System.out.println("Object saved successfully.....!!");
         tx.commit();
         session.close();
-        factory.close();
+        ConnectionFactory.shutdown();
 	}
 
 }

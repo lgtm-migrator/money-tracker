@@ -3,8 +3,6 @@
  */
 package is.moneytracker.model;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -13,8 +11,7 @@ import javax.persistence.Id;
  */
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private long id;
 
 	private String name = "";
 	private String username = "";
@@ -32,8 +29,7 @@ public class User {
 	 * @param password
 	 * @param status
 	 */
-	public User(int id, String name, String username, String password, String status) {
-		this.id = id;
+	public User(String name, String username, String password, String status) {
 		this.name = name;
 		this.username = username;
 		this.password = password;
@@ -51,7 +47,7 @@ public class User {
 	 * @param id
 	 *            the id to set
 	 */
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -116,6 +112,6 @@ public class User {
 	}
 
 	public User clone() {
-		return new User(id, name, username, password, status);
+		return new User(name, username, password, status);
 	}
 }

@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping">
 <hibernate-mapping>
-	<class name="is.moneytracker.model.Wallet" table="Wallets">
+	<class name="is.moneytracker.model.Transaction" table="Transactions">
 		<id name="id" type="int">
 			<column name="id" not-null="true"/>
-			<generator class="identity"/>
+			<generator class="native"/>
 		</id>
 		<property column="wallet_id" name="wallet_id" type="int" />
 		<property column="category_id" name="category_id" type="int" />
-		<property column="created" name="created" type="datetime" />
+		<property column="price" name="price" type="int" />
+		<property column="note" name="note" type="string" />
+		<property column="created" name="created" type="date" />
 		<property column="type" name="type" type="string" />
-		<property column="status" name="status" type="datetime" />
-		<property column="created" name="created" type="datetime" />
+		<property column="status" name="status" type="string" />
 	</class>
 </hibernate-mapping>

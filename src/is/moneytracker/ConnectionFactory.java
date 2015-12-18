@@ -15,23 +15,36 @@ import com.mysql.jdbc.CommunicationsException;
  *
  */
 public class ConnectionFactory {
-	private Configuration cfg;
-	private SessionFactory factory;
+	private static final SessionFactory sessionFactory = buildSessionFactory();
 	private Session session;
 
-	public ConnectionFactory() throws ServiceException {
-		this.cfg = new Configuration();
-	    this.cfg.configure("hibernate.cfg.xml");
+    private static SessionFactory buildSessionFactory() {
+        try
+        {
+            // Create the SessionFactory from hibernate.cfg.xml
+            return new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+        }
+        catch (Throwable ex) {
+            // Make sure you log the exception, as it might be swallowed
+            System.err.println("Initial SessionFactory creation failed." + ex);
+            throw new ExceptionInInitializerError(ex);
+        }
+    }
 
-	    this.factory = cfg.buildSessionFactory();
-	    this.session = this.factory.openSession();
-	}
+    public static SessionFactory getSessionFactory() {
+        return sessionFactory;
+    }
+
+    public static void shutdown() {
+        // Close caches and connection pools
+        getSessionFactory().close();
+    }
 
 	/**
 	 * @return the factory
 	 */
-	public SessionFactory getFactory() {
-		return factory;
+	public static SessionFactory getFactory() {
+		return sessionFactory;
 	}
 
 	/**
@@ -39,13 +52,6 @@ public class ConnectionFactory {
 	 */
 	public Session getSession() {
 		return session;
-	}
-
-	/**
-	 * @param factory the factory to set
-	 */
-	public void setFactory(SessionFactory factory) {
-		this.factory = factory;
 	}
 
 	/**

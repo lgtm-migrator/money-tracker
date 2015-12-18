@@ -17,7 +17,8 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem mnemonicParsing="true" onAction="#openConfigMoneyTracker" text="Cấu hình" />
+              <MenuItem fx:id="categoryMenu" mnemonicParsing="true" onAction="#openCategoryScene" text="Loại chi tiêu" />
+                  <MenuItem mnemonicParsing="true" onAction="#openConfigMoneyTracker" text="Cấu hình" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Trợ giúp">

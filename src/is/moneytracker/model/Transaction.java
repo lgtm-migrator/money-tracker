@@ -3,21 +3,25 @@
  */
 package is.moneytracker.model;
 
-import org.hibernate.type.DateType;
+import java.util.Date;
+
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
 
 /**
  * @author Van-Duyet Le
  *
  */
 public class Transaction {
-	private int id = 0;
+	@Id private int id = 0;
 	private int wallet_id;
 	private int category_id;
-	private DateType created;
+	private Date created;
 	private String type = "";
 	private String status = "";
 	private int price = 0;
-	private String note;
+	private String note = "";
 
 	/**
 	 * @param id
@@ -44,7 +48,7 @@ public class Transaction {
 	 * @param price
 	 * @param note
 	 */
-	public Transaction(int id, int wallet_id, int category_id, DateType created, String type, String status, int price,
+	public Transaction(int id, int wallet_id, int category_id, Date created, String type, String status, int price,
 			String note) {
 		super();
 		this.id = id;
@@ -60,6 +64,8 @@ public class Transaction {
 	/**
 	 * @return the id
 	 */
+    @Id
+    @GeneratedValue
 	public int getId() {
 		return id;
 	}
@@ -81,7 +87,7 @@ public class Transaction {
 	/**
 	 * @return the created
 	 */
-	public DateType getCreated() {
+	public Date getCreated() {
 		return created;
 	}
 
@@ -137,7 +143,7 @@ public class Transaction {
 	/**
 	 * @param created the created to set
 	 */
-	public void setCreated(DateType created) {
+	public void setCreated(Date created) {
 		this.created = created;
 	}
 

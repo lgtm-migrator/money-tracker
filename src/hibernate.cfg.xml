@@ -13,6 +13,9 @@
 		<property name="hbm2ddl.auto">update</property>
 		<property name="connection.pool_size">100</property>
 
+		<mapping resource="is/moneytracker/model/Wallet.hbm.xml"></mapping>
+		<mapping resource="is/moneytracker/model/Category.hbm.xml"></mapping>
+		<mapping resource="is/moneytracker/model/Transaction.hbm.xml"></mapping>
 		<mapping resource="is/moneytracker/model/User.hbm.xml"></mapping>
 
 	</session-factory>

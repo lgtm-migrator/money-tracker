@@ -4,7 +4,7 @@
 	<class name="is.moneytracker.model.User" table="Users">
 		<id name="id" type="long">
 			<column name="id" not-null="true"/>
-			<generator class="identity"/>
+			<generator class="identity" />
 		</id>
 		<property column="name" name="name" type="string" />
 		<property column="username" name="username" type="string" />

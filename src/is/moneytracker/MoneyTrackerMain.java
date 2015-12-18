@@ -3,13 +3,17 @@ package is.moneytracker;
 import java.io.IOException;
 import java.util.Optional;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 import org.hibernate.service.spi.ServiceException;
 
 import com.mysql.jdbc.CommunicationsException;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -24,7 +28,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-
+import javafx.scene.layout.Pane;
 import is.moneytracker.util.*;
 
 /**
@@ -39,8 +43,9 @@ public class MoneyTrackerMain extends Application {
 	private Stage primaryStage;
 	private Scene mainScene;
 	private BorderPane rootLayout;
+	private OverviewController overview;
 
-	private ConnectionFactory connection;
+	private static Session session;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -54,13 +59,13 @@ public class MoneyTrackerMain extends Application {
 	public boolean initConnection() {
 		// Init connection
 		try {
-			connection = new ConnectionFactory();
-		} catch (ServiceException e) {
+			this.session = ConnectionFactory.getSessionFactory().openSession();
+		} catch (HibernateException e) {
 			Message.Error("Không thể kết nối máy chủ CSDL...");
 			return false;
 		}
 
-		if (connection != null) return true;
+		if (session != null) return true;
 		return false;
 	}
 
@@ -80,6 +85,18 @@ public class MoneyTrackerMain extends Application {
 			this.mainScene = new Scene(rootLayout);
 			primaryStage.setScene(this.mainScene);
 			primaryStage.show();
+
+			rootLayout.addEventHandler(WindowEvent.WINDOW_SHOWN, new EventHandler<WindowEvent>()
+		    {
+		        @Override
+		        public void handle(WindowEvent window)
+		        {
+		        	System.out.println("After window showing");
+		        	initConnection();
+		        }
+		    });
+
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -91,13 +108,28 @@ public class MoneyTrackerMain extends Application {
 	 * return
 	 */
 	public void showMoneyTrackerOverview() {
-		OverviewController overview = new OverviewController(this);
+		overview = new OverviewController(this);
 		overview.setMainApp(this);
-		AnchorPane panel = overview.getAnchor();
+		Pane overviewPane = overview.getAnchor();
 
-		rootLayout.setCenter(panel);
+		rootLayout.setCenter(overviewPane);
 
-		initConnection();
+		// initConnection();
+	}
+
+	public OverviewController getOverviewController() {
+		return overview;
+	}
+
+	/**
+	 * show category manager
+	 *
+	 * return
+	 */
+	public void openCategoryScene() {
+		CategoryController cat = new CategoryController(this);
+		cat.setMainApp(this);
+		rootLayout.setCenter(cat.getAnchor());
 	}
 
 	/**
@@ -194,10 +226,19 @@ public class MoneyTrackerMain extends Application {
 		launch(args);
 	}
 
+	@Override
+	public void stop() throws Exception {
+	    ConnectionFactory.shutdown();
+	}
+
 	/**
 	 * @return the connection
 	 */
-	public ConnectionFactory getConnection() {
-		return connection;
+	public Session getSession() {
+		if (session == null) {
+			this.initConnection();
+		}
+
+		return session;
 	}
 }
