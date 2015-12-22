@@ -10,6 +10,8 @@ import org.hibernate.service.spi.ServiceException;
 
 import com.mysql.jdbc.CommunicationsException;
 
+import is.moneytracker.util.Message;
+
 /**
  * @author Van-Duyet Le
  *
@@ -27,8 +29,10 @@ public class ConnectionFactory {
         catch (Throwable ex) {
             // Make sure you log the exception, as it might be swallowed
             System.err.println("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
+            Message.Error("Không thể kết nối CSDL...");
+            //throw new ExceptionInInitializerError(ex);
         }
+		return null;
     }
 
     public static SessionFactory getSessionFactory() {

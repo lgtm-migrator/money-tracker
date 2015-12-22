@@ -72,8 +72,6 @@ public class OverviewController implements Initializable {
 		this.loader = new FXMLLoader(getClass().getResource("view/Overview.fxml"));
 		this.loader.setController(this);
 
-		setMainTableData();
-
 		try {
 			this.anchor = (AnchorPane) this.loader.load();
 			this.splitPane = (SplitPane) this.anchor.getChildren().get(0);
@@ -112,10 +110,6 @@ public class OverviewController implements Initializable {
 			if (tx!=null) tx.rollback();
 			e.printStackTrace();
 		}
-	}
-
-	public void setMainTableData() {
-		if (mainApp == null) return;
 	}
 
 	@Override

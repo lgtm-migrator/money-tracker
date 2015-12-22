@@ -83,6 +83,7 @@ public class MoneyTrackerMain extends Application {
 			// Show the scene containing the root layout.
 			System.out.println("Initital root layout.");
 			this.mainScene = new Scene(rootLayout);
+			this.mainScene.getStylesheets().add("resources/main.css");
 			primaryStage.setScene(this.mainScene);
 			primaryStage.show();
 

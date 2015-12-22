@@ -50,6 +50,9 @@ public class AddMoneyFormController implements Initializable {
 
 	public static final String TRANS_INCOME = "Thu nhập";
 	public static final String TRANS_OUTCOME = "Chi tiêu";
+
+	public static final String ERROR_PRICE = "Nhập sai số tiền";
+
 	private final ObservableList<TransactionType> form_trans_type_options =
 		FXCollections.observableArrayList(
 			new TransactionType("income", TRANS_INCOME),
@@ -123,7 +126,7 @@ public class AddMoneyFormController implements Initializable {
 				price = Integer.parseInt(this.form_price.getText());
 			}
 			catch (java.lang.NumberFormatException e) {
-				Message.Error("Nhập sai đơn vị tiền");
+				Message.Error(AddMoneyFormController.ERROR_PRICE);
 				return;
 			}
 			saver.setPrice(price);

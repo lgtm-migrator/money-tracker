@@ -7,6 +7,7 @@
 			<generator class="identity"/>
 		</id>
 		<property column="name" name="name" type="string" />
+		<property column="type" name="type" type="string" />
 		<property column="image" name="image" type="string" />
 		<property column="description" name="description" type="string" />
 	</class>

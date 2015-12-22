@@ -40,6 +40,11 @@
 								<Label text="Tên" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
 							</children>
 						</GridPane>
+                  <Label fx:id="form_message_success" alignment="CENTER" contentDisplay="CENTER" layoutY="208.0" prefHeight="22.0" prefWidth="200.0" style="-fx-font-weight: 700;" text="Thành công" textFill="#038d1c" visible="false">
+                     <padding>
+                        <Insets bottom="10.0" top="10.0" />
+                     </padding>
+                  </Label>
 					</children>
 				</AnchorPane>
 				<AnchorPane fx:id="rightPanel" minHeight="0.0" minWidth="0.0" prefHeight="160.0">
@@ -66,9 +71,9 @@
 										<TableView fx:id="mainTable" layoutX="22.0" layoutY="14.0" prefHeight="590.0" prefWidth="310.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 											<columns>
 												<TableColumn fx:id="mainTableColumnStt" prefWidth="41.0" text="STT" />
-												<TableColumn fx:id="mainTableColumnNote" prefWidth="102.0" text="Loại" />
-												<TableColumn fx:id="mainTableColumnDate" prefWidth="192.0" text="Tên" />
-												<TableColumn prefWidth="113.0" text="Action" />
+												<TableColumn fx:id="mainTableColumnType" prefWidth="102.0" text="Loại" />
+												<TableColumn fx:id="mainTableColumnName" prefWidth="192.0" text="Tên" />
+												<TableColumn fx:id="mainTableColumnAction" prefWidth="113.0" text="Action" />
 											</columns>
 										</TableView>
 									</children>
