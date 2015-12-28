@@ -59,8 +59,11 @@ public class AddMoneyFormController implements Initializable {
 			new TransactionType("outcome", TRANS_OUTCOME)
     );
 
+	private ObservableList<Category> incomeCat;
+	private ObservableList<Category> outcomeCat;
+
 	@FXML private ComboBox<TransactionType> form_trans_type;
-	@FXML private ComboBox<Transaction> form_cat;
+	@FXML private ComboBox<Category> form_cat;
 	@FXML private TextField form_price;
 	@FXML private DatePicker form_date;
 	@FXML private TextArea form_note;
@@ -77,17 +80,41 @@ public class AddMoneyFormController implements Initializable {
 		try {
 			this.setAnchor((AnchorPane) this.loader.load());
 
-		} catch (IOException exception) {
-			throw new RuntimeException(exception);
+		} catch (IOException e) {
+			Message.Error(e.getMessage());
+			//e.printStackTrace();
+			throw new RuntimeException(e);
 		}
+	}
+
+	public AddMoneyFormController(MoneyTrackerMain mainApp) {
+		this();
+		this.mainApp = mainApp;
+
+		org.hibernate.Transaction tx = null;
+		Session session = this.getMainApp().getSession();
+		try {
+
+			tx = session.beginTransaction();
+			List<Category> trans = session.createQuery("FROM Category WHERE type = 'income'").list();
+			incomeCat = FXCollections.observableArrayList(trans);
+			// tx.commit();
+
+			List<Category> trans2 = session.createQuery("FROM Category WHERE type = 'outcome'").list();
+			outcomeCat = FXCollections.observableArrayList(trans2);
+			tx.commit();
+
+		} catch (HibernateException e) {
+           // if (tx!=null) tx.rollback();
+
+           Message.Error(e.getMessage());
+           e.printStackTrace();
+        }
 	}
 
 	@Override
 	public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
 		this.form_trans_type.setItems(form_trans_type_options);
-
-		// Load category list
-
 
 		// Make price only numberic
 		this.form_price.textProperty().addListener(new ChangeListener<String>() {
@@ -100,14 +127,20 @@ public class AddMoneyFormController implements Initializable {
 		    }
 		});
 
-		Session session = ConnectionFactory.getSessionFactory().openSession();
+		if (this.getMainApp() == null) return;
+
     }
 
 	@FXML
 	private void handleChangeTransType(ActionEvent e) {
 		TransactionType currentTrans = this.form_trans_type.getValue();
 
-		System.out.println(currentTrans.getId());
+		if (currentTrans.getId().equals("income")) {
+			this.form_cat.setItems(this.incomeCat);
+		} else if (currentTrans.getId().equals("outcome")) {
+			this.form_cat.setItems(this.outcomeCat);
+		}
+
 		// Load categories
 		// this.form_cat.setItems();
 	}
@@ -134,13 +167,21 @@ public class AddMoneyFormController implements Initializable {
 			try {
 				System.out.println(this.form_trans_type.getValue().getId().toString());
 				saver.setType(this.form_trans_type.getValue().getId());
+
+				if (this.form_trans_type.getValue().getId().equals("outcome"))
+					saver.setPrice(-1 * price);
 			} catch (NullPointerException e) {
 				Message.Error("Vui lòng chọn loại giao dịch");
 				return;
 			}
 
+			if (this.form_cat.getValue() == null) {
+				Message.Error("Vui lòng chọn loại giao dịch");
+				return;
+			}
+			saver.setCategory_id((int) this.form_cat.getValue().getId());
+
 			// TODO
-			saver.setCategory_id(0);
 			saver.setWallet_id(0);
 			saver.setCreated(new Date());
 			saver.setStatus("ok");

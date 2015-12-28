@@ -87,8 +87,7 @@ public class OverviewController implements Initializable {
 		this.setMainApp(mainApp);
 
 		// Load form
-		this.addForm = new AddMoneyFormController();
-		this.addForm.setMainApp(mainApp);
+		this.addForm = new AddMoneyFormController(mainApp);
 		this.addForm.getAnchor().setMaxWidth(150);
 
 		this.loadTableData();

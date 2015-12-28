@@ -51,9 +51,9 @@
 					<children>
 						<SplitPane dividerPositions="0.08204334365325078" layoutX="47.0" layoutY="2.0" orientation="VERTICAL" prefHeight="648.0" prefWidth="312.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 							<items>
-								<HBox minWidth="100.0">
+								<HBox alignment="CENTER_LEFT" maxHeight="50.0" minWidth="100.0">
 									<children>
-										<Label prefHeight="40.0" prefWidth="214.0" text="Loại chi tiêu">
+										<Label prefHeight="38.0" prefWidth="378.0" text="Loại chi tiêu">
 											<font>
 												<Font size="16.0" />
 											</font>
@@ -64,11 +64,12 @@
 												<Insets left="10.0" />
 											</padding>
 										</Label>
+                              <Button fx:id="deleteBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" text="Xóa" />
 									</children>
 								</HBox>
 								<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="525.0" prefWidth="310.0">
 									<children>
-										<TableView fx:id="mainTable" layoutX="22.0" layoutY="14.0" prefHeight="590.0" prefWidth="310.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+										<TableView fx:id="mainTable" layoutX="22.0" layoutY="14.0" prefHeight="452.0" prefWidth="449.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 											<columns>
 												<TableColumn fx:id="mainTableColumnStt" prefWidth="41.0" text="STT" />
 												<TableColumn fx:id="mainTableColumnType" prefWidth="102.0" text="Loại" />
