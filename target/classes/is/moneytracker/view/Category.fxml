@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="mainOverview" prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="mainOverview" prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
 		<SplitPane fx:id="splitPane" dividerPositions="0.3" prefHeight="650.0" prefWidth="450.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 			<items>
@@ -53,7 +53,7 @@
 							<items>
 								<HBox alignment="CENTER_LEFT" maxHeight="50.0" minWidth="100.0">
 									<children>
-										<Label prefHeight="38.0" prefWidth="378.0" text="Loại chi tiêu">
+										<Label prefHeight="38.0" prefWidth="305.0" text="Loại chi tiêu">
 											<font>
 												<Font size="16.0" />
 											</font>
@@ -64,7 +64,12 @@
 												<Insets left="10.0" />
 											</padding>
 										</Label>
-                              <Button fx:id="deleteBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" text="Xóa" />
+                              <Button fx:id="editBtn" mnemonicParsing="true" onAction="#editCat" text="Sửa">
+                                 <HBox.margin>
+                                    <Insets right="15.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="deleteBtn" onAction="#delCat" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" text="Xóa" />
 									</children>
 								</HBox>
 								<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="525.0" prefWidth="310.0">

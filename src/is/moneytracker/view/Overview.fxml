@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.chart.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.web.*?>
@@ -9,27 +10,36 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="mainOverview" prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="mainOverview" prefHeight="500.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
 	<children>
 		<SplitPane fx:id="splitPane" dividerPositions="0.3" prefHeight="650.0" prefWidth="450.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 			<items>
-				<AnchorPane id="leftPanel" fx:id="leftPanel" minHeight="0.0" minWidth="0.0" prefHeight="498.0" prefWidth="198.0" />
+				<AnchorPane id="leftPanel" fx:id="leftPanel" minHeight="0.0" minWidth="0.0" prefHeight="498.0" prefWidth="225.0" />
 				<AnchorPane fx:id="rightPanel" minHeight="0.0" minWidth="0.0" prefHeight="160.0">
 					<children>
 						<SplitPane dividerPositions="0.08204334365325078" layoutX="47.0" layoutY="2.0" orientation="VERTICAL" prefHeight="648.0" prefWidth="312.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 							<items>
 								<HBox minWidth="100.0" prefHeight="77.0" prefWidth="449.0">
 									<children>
-
-										<Button fx:id="toggleAddButton" layoutY="107.0" mnemonicParsing="false" onAction="#addAction" text="[+] Thêm" textAlignment="RIGHT" HBox.hgrow="SOMETIMES">
-											<opaqueInsets>
-												<Insets />
-											</opaqueInsets>
-											<HBox.margin>
-												<Insets left="5.0" right="5.0" top="5.0" />
-											</HBox.margin>
-										</Button>
-                              <BarChart prefHeight="150.0" prefWidth="358.0">
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+      
+      										<Button fx:id="toggleAddButton" mnemonicParsing="false" onAction="#addAction" text="[+] Thêm" textAlignment="RIGHT">
+      											<opaqueInsets>
+      												<Insets />
+      											</opaqueInsets>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" left="10.0" top="10.0" />
+                                       </VBox.margin>
+      										</Button>
+                                    <Button fx:id="deleteTransactionBtn" mnemonicParsing="false" onAction="#deleteTransaction" prefHeight="25.0" prefWidth="64.0" text="Xóa">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" left="10.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                              <BarChart fx:id="overviewChart" prefHeight="150.0" prefWidth="277.0">
                                 <xAxis>
                                   <CategoryAxis side="BOTTOM" />
                                 </xAxis>
@@ -37,19 +47,53 @@
                                   <NumberAxis side="LEFT" />
                                 </yAxis>
                               </BarChart>
+                              <GridPane prefHeight="150.0" prefWidth="217.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="88.0" minWidth="10.0" prefWidth="71.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="157.0" minWidth="10.0" prefWidth="139.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints maxHeight="57.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="73.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="76.0" text="Tổng thu" textAlignment="RIGHT" GridPane.rowIndex="1" />
+                                    <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="74.0" text="Tổng chi" GridPane.rowIndex="2" />
+                                    <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="79.0" text="Số dư" GridPane.rowIndex="3" />
+                                    <Label fx:id="overviewIncome" alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="27.0" prefWidth="285.0" style="-fx-font-weight: 700;" text="0" textAlignment="CENTER" textFill="#0cd319" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="overviewOutcome" alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="239.0" style="-fx-font-weight: 700;" text="0" textAlignment="CENTER" textFill="#fc1515" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="overviewTotal" alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="143.0" text="0" textAlignment="CENTER" textFill="#6b6262" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Label>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets right="20.0" />
+                                 </HBox.margin>
+                              </GridPane>
 									</children>
 								</HBox>
 								<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="525.0" prefWidth="310.0">
 									<children>
-										<TableView fx:id="mainTable" layoutX="22.0" layoutY="14.0" prefHeight="590.0" prefWidth="310.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-											<columns>
-												<TableColumn fx:id="mainTableColumnStt" prefWidth="41.0" text="STT" />
-												<TableColumn fx:id="mainTableColumnPrice" prefWidth="121.0" text="\$" />
-												<TableColumn fx:id="mainTableColumnNote" prefWidth="102.0" text="Nội dung" />
-												<TableColumn fx:id="mainTableColumnCreated" prefWidth="192.0" text="Ngày tháng" />
-												<TableColumn prefWidth="75.0" />
-											</columns>
-										</TableView>
+                    										<TableView fx:id="mainTable" layoutX="22.0" layoutY="14.0" prefHeight="590.0" prefWidth="310.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    											<columns>
+                    												<TableColumn fx:id="mainTableColumnCreated" prefWidth="192.0" text="Ngày tháng" />
+                    												<TableColumn fx:id="mainTableColumnPrice" prefWidth="121.0" text="Số tiền" />
+                    												<TableColumn fx:id="mainTableColumnNote" prefWidth="102.0" text="Nội dung" />
+                    												<TableColumn prefWidth="75.0" />
+                    											</columns>
+                    										</TableView>
 									</children>
 								</AnchorPane>
 							</items>

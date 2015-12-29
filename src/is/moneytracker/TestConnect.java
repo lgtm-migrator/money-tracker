@@ -13,18 +13,9 @@ public class TestConnect {
 
         Session session = ConnectionFactory.getSessionFactory().openSession();
 
-
-        User user = new User();
-        user.setName("Duyet");
-        user.setUsername("duyetdev");
-        user.setPassword("xxxx");
-
-        User user2 = user.clone();
-
-
         Transaction tx = session.beginTransaction();
-        session.save(user);
-        session.save(user2);
+        session.save(new User("Duyet", "duyetdev", "duyetdev", "ok"));
+        session.save(new User("Trang", "trangtran", "trangtran", "ok"));
 
 
         System.out.println("Object saved successfully.....!!");

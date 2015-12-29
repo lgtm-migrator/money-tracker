@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.service.spi.ServiceException;
 
@@ -11,6 +12,7 @@ import com.mysql.jdbc.CommunicationsException;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -19,6 +21,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
@@ -44,16 +47,34 @@ public class MoneyTrackerMain extends Application {
 	private Scene mainScene;
 	private BorderPane rootLayout;
 	private OverviewController overview;
+	private LoginForm loginForm;
 
+	final public static boolean isLogin = false;
 	private static Session session;
+
+	public int userId = 0;
 
 	@Override
 	public void start(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		this.primaryStage.setTitle("Money Tracker v0.1 - UIT");
 
+		// Initial Main
 		initRootLayout();
 		showMoneyTrackerOverview();
+
+		this.loginForm = new LoginForm();
+		this.loginForm.setMainApp(this);
+		try {
+			this.loginForm.start(primaryStage);
+			this.userId = this.loginForm.userId;
+			// primaryStage.show();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		primaryStage.show();
 	}
 
 	public boolean initConnection() {
@@ -85,7 +106,7 @@ public class MoneyTrackerMain extends Application {
 			this.mainScene = new Scene(rootLayout);
 			this.mainScene.getStylesheets().add("resources/main.css");
 			primaryStage.setScene(this.mainScene);
-			primaryStage.show();
+
 
 			rootLayout.addEventHandler(WindowEvent.WINDOW_SHOWN, new EventHandler<WindowEvent>()
 		    {
@@ -111,11 +132,29 @@ public class MoneyTrackerMain extends Application {
 	public void showMoneyTrackerOverview() {
 		overview = new OverviewController(this);
 		overview.setMainApp(this);
+		overview.loadTableData();
 		Pane overviewPane = overview.getAnchor();
 
 		rootLayout.setCenter(overviewPane);
 
 		// initConnection();
+	}
+
+	public void deleteAllTrans() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setHeaderText("Xóa toàn bộ dữ liệu");
+
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK){
+			System.out.println("Stop MoneyTracker...");
+
+			Query query = session.createQuery("DELETE FROM Transaction WHERE user_id = :user_id");
+			query.setParameter("user_id", this.userId);
+			query.executeUpdate();
+
+			Message.MessageBox("Xóa thành công!");
+			this.getOverviewController().loadTableData();
+		}
 	}
 
 	public OverviewController getOverviewController() {
@@ -131,6 +170,12 @@ public class MoneyTrackerMain extends Application {
 		CategoryController cat = new CategoryController(this);
 		cat.setMainApp(this);
 		rootLayout.setCenter(cat.getAnchor());
+	}
+
+	public void openStatDashboard() {
+		StatDashboardController stat = new StatDashboardController(this);
+		stat.setMainApp(this);
+		rootLayout.setCenter(stat.getAnchor());
 	}
 
 	/**

@@ -13,10 +13,14 @@ import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.mapping.List;
+import org.hibernate.transform.Transformers;
 import org.hibernate.type.DateType;
+import org.hibernate.type.IntegerType;
+import org.hibernate.type.StringType;
 
 import is.moneytracker.model.Category;
 import is.moneytracker.model.Transaction;
+import is.moneytracker.model.TransactionByCategory;
 import is.moneytracker.model.TransactionType;
 import is.moneytracker.util.Message;
 import javafx.beans.value.ChangeListener;
@@ -52,11 +56,7 @@ import javafx.scene.layout.GridPane;
  * @author Van-Duyet Le
  *
  */
-/**
- * @author Van-Duyet Le
- *
- */
-public class CategoryController implements Initializable {
+public class StatDashboardController implements Initializable {
 	public static final String TRANS_INCOME = "Thu nhập";
 	public static final String TRANS_OUTCOME = "Chi tiêu";
 
@@ -80,22 +80,22 @@ public class CategoryController implements Initializable {
 
 	private FXMLLoader loader;
 
-	@FXML private TableView<Category> mainTable;
-	@FXML private ObservableList<Category> categoriesData = FXCollections.observableArrayList();
+	@FXML private TableView<TransactionByCategory> mainTable;
+	@FXML private ObservableList<TransactionByCategory> categoriesData = FXCollections.observableArrayList();
 
 	// Table Column
-	@FXML private TableColumn<Category, String> mainTableColumnStt;
-	@FXML private TableColumn<Category, String> mainTableColumnType;
-	@FXML private TableColumn<Category, String> mainTableColumnName;
-	@FXML private TableColumn<Category, String> mainTableColumnAction;
+	@FXML private TableColumn<TransactionByCategory, String> mainTableColumnType;
+	@FXML private TableColumn<TransactionByCategory, Long> mainTableColumnIncome;
+	@FXML private TableColumn<TransactionByCategory, Long> mainTableColumnOutcome;
+	@FXML private TableColumn<TransactionByCategory, Long> mainTableColumnTotal;
 
 	Category selectedItem;
 
 	/**
 	 * Constructor
 	 */
-	public CategoryController() {
-		this.loader = new FXMLLoader(getClass().getResource("view/Category.fxml"));
+	public StatDashboardController() {
+		this.loader = new FXMLLoader(getClass().getResource("view/StatDashboard.fxml"));
 		this.loader.setController(this);
 
 		// setMainTableData();
@@ -108,7 +108,7 @@ public class CategoryController implements Initializable {
 		}
 	}
 
-	public CategoryController(MoneyTrackerMain mainApp) {
+	public StatDashboardController(MoneyTrackerMain mainApp) {
 		this();
 		this.setMainApp(mainApp);
 
@@ -117,12 +117,36 @@ public class CategoryController implements Initializable {
 	}
 
 	public void loadTableData() {
+//
+//		SELECT categories.id, categories.name,
+//		SUM(CASE WHEN transactions.price < 0 THEN transactions.price  ELSE 0 END) as outcome,
+//		SUM(CASE WHEN transactions.price > 0 THEN transactions.price  ELSE 0 END) as income,
+//		SUM(transactions.price) as total
+//
+//		FROM transactions, categories
+//		WHERE transactions.category_id = categories.id
+//		GROUP BY categories.id
+//
+
 		// Load data to table
 		Session session = this.getMainApp().getSession();
 		org.hibernate.Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			java.util.List<Category> trans = session.createQuery("FROM Category").list();
+			@SuppressWarnings("unchecked")
+			java.util.List<TransactionByCategory> trans = session.createSQLQuery("SELECT categories.id, categories.name, " +
+				"SUM(CASE WHEN transactions.price < 0 THEN transactions.price  ELSE 0 END) as outcome, " +
+				"SUM(CASE WHEN transactions.price > 0 THEN transactions.price  ELSE 0 END) as income, " +
+				"SUM(transactions.price) as total " +
+				"FROM transactions, categories " +
+				"WHERE transactions.category_id = categories.id " +
+				"GROUP BY categories.id")
+			.addScalar("id", new IntegerType())
+		    .addScalar("name", new StringType())
+		    .addScalar("outcome", new IntegerType())
+		    .addScalar("income", new IntegerType())
+		    .addScalar("total", new IntegerType())
+		    .setResultTransformer(Transformers.aliasToBean(TransactionByCategory.class)).list();
 
 			categoriesData = FXCollections.observableArrayList(trans);
 			this.mainTable.setItems(categoriesData);
@@ -141,29 +165,13 @@ public class CategoryController implements Initializable {
 
 	@Override
 	public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
-		this.cat_type.setItems(this.form_trans_type_options);
 
 		final StyleChangingRowFactory<Category> rowFactory = new StyleChangingRowFactory<>("highlightedRow");
-		mainTable.setRowFactory(rowFactory);
 
-		mainTableColumnStt.setCellValueFactory(new PropertyValueFactory<Category, String>("id"));
-		mainTableColumnType.setCellValueFactory(new PropertyValueFactory<Category, String>("type"));
-		mainTableColumnName.setCellValueFactory(new PropertyValueFactory<Category, String>("name"));
-
-		CategoryController that = this;
-	    mainTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-	        @Override
-	        public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
-	            //Check whether item is selected and set value of selected item to Label
-	            if(mainTable.getSelectionModel().getSelectedItem() != null)
-	            {
-	               TableViewSelectionModel selectionModel = mainTable.getSelectionModel();
-	               that.selectedItem = (Category) selectionModel.getSelectedItem();
-	               System.out.println("Selected Value" + that.selectedItem.getId());
-	             }
-	             }
-	         });
-
+		mainTableColumnType.setCellValueFactory(new PropertyValueFactory<TransactionByCategory, String>("name"));
+		mainTableColumnIncome.setCellValueFactory(new PropertyValueFactory<TransactionByCategory, Long>("income"));
+		mainTableColumnOutcome.setCellValueFactory(new PropertyValueFactory<TransactionByCategory, Long>("outcome"));
+		mainTableColumnTotal.setCellValueFactory(new PropertyValueFactory<TransactionByCategory, Long>("total"));
     }
 
 	public void delCat() {

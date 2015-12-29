@@ -2,5 +2,7 @@ eclipse.preferences.version=1
 encoding//src/is/moneytracker/AddMoneyFormController.java=UTF-8
 encoding//src/is/moneytracker/CategoryController.java=UTF-8
 encoding//src/is/moneytracker/ConnectionFactory.java=UTF-8
+encoding//src/is/moneytracker/LoginForm.java=UTF-8
 encoding//src/is/moneytracker/MoneyTrackerMain.java=UTF-8
 encoding//src/is/moneytracker/OverviewController.java=UTF-8
+encoding//src/is/moneytracker/StatDashboardController.java=UTF-8

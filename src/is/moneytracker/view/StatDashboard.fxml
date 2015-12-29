@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="500.0" prefWidth="650.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+   <children>
+      <SplitPane dividerPositions="0.1905" orientation="VERTICAL" prefHeight="500.0" prefWidth="650.0">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <TableView fx:id="mainTable" layoutX="2.0" prefHeight="286.0" prefWidth="595.0">
+                    <columns>
+                      <TableColumn fx:id="mainTableColumnType" prefWidth="169.0" text="Danh mục" />
+                      <TableColumn fx:id="mainTableColumnIncome" prefWidth="116.0" text="Thu" />
+                        <TableColumn fx:id="mainTableColumnOutcome" prefWidth="123.0" text="Chi" />
+                        <TableColumn fx:id="mainTableColumnTotal" prefWidth="185.0" text="Số dư" />
+                    </columns>
+                  </TableView>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </children>
+</AnchorPane>

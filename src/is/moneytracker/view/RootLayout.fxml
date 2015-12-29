@@ -6,19 +6,22 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="550.0" prefWidth="717.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="600.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem fx:id="menuCloseItem" mnemonicParsing="true" onAction="#closeMoneyTracker" text="Close" />
+              <MenuItem fx:id="statDashboard" mnemonicParsing="true" onAction="#openStatDashboard" text="Thống kê" />
+              <MenuItem fx:id="menuCloseItem" mnemonicParsing="true" onAction="#closeMoneyTracker" text="Thoát" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
               <MenuItem fx:id="categoryMenu" mnemonicParsing="true" onAction="#openCategoryScene" text="Loại chi tiêu" />
                   <MenuItem mnemonicParsing="true" onAction="#openConfigMoneyTracker" text="Cấu hình" />
+                  <MenuItem fx:id="menuCloseItem" mnemonicParsing="true" onAction="#deleteAllTrans" text="Xóa dữ liệu" />
+
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Trợ giúp">

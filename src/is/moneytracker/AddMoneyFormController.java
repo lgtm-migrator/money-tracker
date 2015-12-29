@@ -6,6 +6,7 @@ package is.moneytracker;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -36,6 +37,7 @@ import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.StringConverter;
 
 /**
  * @author Van-Duyet Le
@@ -115,6 +117,30 @@ public class AddMoneyFormController implements Initializable {
 	@Override
 	public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
 		this.form_trans_type.setItems(form_trans_type_options);
+		this.form_date.setShowWeekNumbers(false);
+
+		String pattern = "yyyy-MM-dd";
+		this.form_date.setConverter(new StringConverter<LocalDate>() {
+		     DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(pattern);
+
+		     @Override
+		     public String toString(LocalDate date) {
+		         if (date != null) {
+		             return dateFormatter.format(date);
+		         } else {
+		             return "";
+		         }
+		     }
+
+		     @Override
+		     public LocalDate fromString(String string) {
+		         if (string != null && !string.isEmpty()) {
+		             return LocalDate.parse(string, dateFormatter);
+		         } else {
+		             return null;
+		         }
+		     }
+		 });
 
 		// Make price only numberic
 		this.form_price.textProperty().addListener(new ChangeListener<String>() {
@@ -182,7 +208,7 @@ public class AddMoneyFormController implements Initializable {
 			saver.setCategory_id((int) this.form_cat.getValue().getId());
 
 			// TODO
-			saver.setWallet_id(0);
+			saver.setUser_id(this.getMainApp().userId);
 			saver.setCreated(new Date());
 			saver.setStatus("ok");
 

@@ -36,6 +36,13 @@ public class User {
 		this.status = status;
 	}
 
+	public static int login(String username, String password) {
+
+		User userLogin = new User();
+
+		return 0;
+	}
+
 	/**
 	 * @return the id
 	 */

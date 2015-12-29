@@ -26,6 +26,10 @@ public class TransactionType {
 		this.name = name;
 	}
 
+	public TransactionType(String type) {
+		this.id = type;
+	}
+
 	/**
 	 * @return the id
 	 */

@@ -6,7 +6,7 @@
 			<column name="id" not-null="true"/>
 			<generator class="native"/>
 		</id>
-		<property column="wallet_id" name="wallet_id" type="int" />
+		<property column="user_id" name="user_id" type="int" />
 		<property column="category_id" name="category_id" type="int" />
 		<property column="price" name="price" type="int" />
 		<property column="note" name="note" type="string" />
