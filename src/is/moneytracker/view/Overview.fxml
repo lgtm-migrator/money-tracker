@@ -17,11 +17,11 @@
 				<AnchorPane id="leftPanel" fx:id="leftPanel" minHeight="0.0" minWidth="0.0" prefHeight="498.0" prefWidth="225.0" />
 				<AnchorPane fx:id="rightPanel" minHeight="0.0" minWidth="0.0" prefHeight="160.0">
 					<children>
-						<SplitPane dividerPositions="0.08204334365325078" layoutX="47.0" layoutY="2.0" orientation="VERTICAL" prefHeight="498.0" prefWidth="591.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+						<SplitPane dividerPositions="0.4032258064516129" layoutX="47.0" layoutY="2.0" orientation="VERTICAL" prefHeight="498.0" prefWidth="591.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 							<items>
 								<HBox minWidth="100.0" prefHeight="77.0" prefWidth="449.0">
 									<children>
-                              <VBox prefHeight="200.0" prefWidth="100.0">
+                              <VBox prefHeight="197.0" prefWidth="165.0">
                                  <children>
       
       										<Button fx:id="toggleAddButton" mnemonicParsing="false" onAction="#addAction" text="[+] Thêm" textAlignment="RIGHT">
@@ -39,9 +39,9 @@
                                     </Button>
                                  </children>
                               </VBox>
-                              <VBox prefHeight="150.0" prefWidth="323.0">
+                              <VBox prefHeight="197.0" prefWidth="382.0">
                                  <children>
-                                    <StackedAreaChart fx:id="overviewChart">
+                                    <StackedAreaChart fx:id="overviewChart" prefHeight="150.0" prefWidth="317.0">
                                       <xAxis>
                                         <NumberAxis side="BOTTOM" />
                                       </xAxis>
@@ -64,15 +64,16 @@
                                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="157.0" minWidth="10.0" prefWidth="139.0" />
                                 </columnConstraints>
                                 <rowConstraints>
-                                    <RowConstraints maxHeight="57.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="73.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="96.0" minHeight="10.0" prefHeight="88.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="82.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="82.0" minHeight="8.0" prefHeight="8.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="57.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
                                     <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="17.0" prefWidth="76.0" text="Tổng thu" textAlignment="RIGHT" GridPane.rowIndex="1" />
                                     <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="74.0" text="Tổng chi" GridPane.rowIndex="2" />
-                                    <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="79.0" text="Số dư" GridPane.rowIndex="3" />
+                                    <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="79.0" text="Số dư" GridPane.rowIndex="4" />
                                     <Label fx:id="overviewIncome" alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="27.0" prefWidth="285.0" style="-fx-font-weight: 700;" text="0" textAlignment="CENTER" textFill="#0cd319" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                        <font>
                                           <Font size="18.0" />
@@ -83,11 +84,12 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="overviewTotal" alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="143.0" text="0" textAlignment="CENTER" textFill="#6b6262" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                    <Label fx:id="overviewTotal" alignment="CENTER_RIGHT" prefHeight="27.0" prefWidth="143.0" text="0" textAlignment="CENTER" textFill="#6b6262" GridPane.columnIndex="1" GridPane.rowIndex="4">
                                        <font>
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
+                                    <Separator prefHeight="3.0" prefWidth="158.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                  </children>
                                  <HBox.margin>
                                     <Insets right="20.0" />

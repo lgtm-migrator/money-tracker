@@ -196,6 +196,8 @@ public class StatDashboardController implements Initializable {
 			    );
 
 		pickerMonth.setItems(months);
+		currentMonth = new Date().getMonth() + 1;
+
 		pickerMonth.setValue(currentMonth);
 
 		ObservableList<Integer> years =
@@ -204,6 +206,7 @@ public class StatDashboardController implements Initializable {
 			    );
 
 		pickerYear.setItems(years);
+		currentYear = 2015;
 		pickerYear.setValue(currentYear);
 
 		StatDashboardController that = this;

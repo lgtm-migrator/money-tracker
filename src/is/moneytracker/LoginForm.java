@@ -52,7 +52,8 @@ public class LoginForm extends Application {
         dlg.setHeaderText("Nhập tên tài khoản và mật khẩu để đăng nhập");
 
         ButtonType loginBtnType = new ButtonType("Login");
-        dlg.getDialogPane().getButtonTypes().addAll(loginBtnType,ButtonType.CANCEL);
+        ButtonType exitBtnType = new ButtonType("Thoát");
+        dlg.getDialogPane().getButtonTypes().addAll(loginBtnType,exitBtnType);
         GridPane grid = new GridPane();
         grid.setVgap(10);
         grid.setHgap(10);
@@ -82,8 +83,13 @@ public class LoginForm extends Application {
             if(dialogButton==loginBtnType){
                 return new Pair<>(txtUsername.getText(),txtPassword.getText());
             }
-            else if(dialogButton==ButtonType.CANCEL){
-
+            else if(dialogButton==exitBtnType){
+            	try {
+					this.mainApp.closeMoneyTracker();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
                 return null;
             } else{
                 return null;
