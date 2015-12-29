@@ -1,24 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="500.0" prefWidth="650.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<AnchorPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <SplitPane dividerPositions="0.1905" orientation="VERTICAL" prefHeight="500.0" prefWidth="650.0">
+      <SplitPane dividerPositions="0.1905" orientation="VERTICAL" prefHeight="500.0" prefWidth="650.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                <children>
-                  <TableView fx:id="mainTable" layoutX="2.0" prefHeight="286.0" prefWidth="595.0">
+                  <SplitPane dividerPositions="0.2260061919504644" layoutX="131.0" layoutY="-34.0" prefHeight="92.0" prefWidth="648.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <items>
+                      <AnchorPane maxWidth="160.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                           <children>
+                              <Button fx:id="backToMainBtn" layoutX="22.0" layoutY="9.0" mnemonicParsing="false" onAction="#backToMain" text="&lt;&lt; Quay lại" />
+                              <Separator layoutX="-28.0" layoutY="73.0" prefHeight="3.0" prefWidth="143.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="43.5" />
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                           <children>
+                              <GridPane layoutY="22.0" prefHeight="90.0" prefWidth="497.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label prefHeight="30.0" prefWidth="485.0" text="Thống kê">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Label>
+                                    <Pane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                                       <children>
+                                          <ComboBox fx:id="pickerYear" layoutX="131.0" layoutY="4.0" prefHeight="25.0" prefWidth="79.0" promptText="2015" />
+                                          <ComboBox fx:id="pickerMonth" layoutX="43.0" layoutY="4.0" prefHeight="25.0" prefWidth="79.0" promptText="12" />
+                                          <Label layoutY="6.0" text="Tháng" />
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </children></AnchorPane>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+               <children>
+                  <AnchorPane layoutX="7.0" layoutY="43.0" />
+                  <TableView fx:id="mainTable" prefHeight="400.0" prefWidth="648.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <columns>
                       <TableColumn fx:id="mainTableColumnType" prefWidth="169.0" text="Danh mục" />
-                      <TableColumn fx:id="mainTableColumnIncome" prefWidth="116.0" text="Thu" />
-                        <TableColumn fx:id="mainTableColumnOutcome" prefWidth="123.0" text="Chi" />
-                        <TableColumn fx:id="mainTableColumnTotal" prefWidth="185.0" text="Số dư" />
+                      <TableColumn fx:id="mainTableColumnIncome" prefWidth="126.0" text="Thu" />
+                        <TableColumn fx:id="mainTableColumnOutcome" prefWidth="119.0" text="Chi" />
+                        <TableColumn fx:id="mainTableColumnTotal" prefWidth="179.0" text="Số dư" />
                     </columns>
                   </TableView>
                </children>

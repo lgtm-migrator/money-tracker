@@ -26,12 +26,14 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TableColumn;
@@ -41,9 +43,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.effect.Effect;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
-
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import javafx.util.Callback;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 
 /**
@@ -70,7 +76,7 @@ public class OverviewController implements Initializable {
 	@FXML private Button deleteTransactionBtn;
 
 	@FXML private BarChart<String, Integer> overviewChart;
-    @FXML private CategoryAxis xAxis;
+//    @FXML private CategoryAxis xAxis;
     private ObservableList<String> monthNames = FXCollections.observableArrayList();
 
 	private FXMLLoader loader;
@@ -78,6 +84,9 @@ public class OverviewController implements Initializable {
 	@FXML private Label overviewIncome;
 	@FXML private Label overviewOutcome;
 	@FXML private Label overviewTotal;
+
+	@FXML private ComboBox<Integer> pickerYear;
+	@FXML private ComboBox<Integer> pickerMonth;
 
 	Long _in = (long) 0;
 	Long _out = (long) 0;
@@ -91,7 +100,11 @@ public class OverviewController implements Initializable {
 //	@FXML private TableColumn<Transaction, String> mainTableColumnStt;
 	@FXML private TableColumn<Transaction, Long> mainTableColumnPrice;
 	@FXML private TableColumn<Transaction, String> mainTableColumnNote;
-	@FXML private TableColumn<Transaction, String> mainTableColumnCreated;
+	@FXML private TableColumn<Transaction, Date> mainTableColumnCreated;
+
+	protected Integer currentMonth;
+
+	protected Integer currentYear;
 
 	/**
 	 * Constructor
@@ -121,12 +134,24 @@ public class OverviewController implements Initializable {
 	}
 
 	public void loadTableData() {
+		loadTableData(-1, -1);
+	}
+
+	public void loadTableData(int month, int year) {
 		// Load data to table
 		Session session = this.getMainApp().getSession();
 		org.hibernate.Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
-			List<Transaction> trans = session.createQuery("FROM Transaction").list();
+			List<Transaction> trans;
+			if (month > 0 && year > 0) {
+				trans = session.createQuery("FROM Transaction WHERE MONTH(created) = :month AND YEAR(created) = :year")
+						.setParameter("month", month)
+						.setParameter("year", year)
+						.list();
+			} else {
+				trans = session.createQuery("FROM Transaction").list();
+			}
 
 			transactionData = FXCollections.observableArrayList(trans);
 			this.mainTable.setItems(transactionData);
@@ -146,22 +171,53 @@ public class OverviewController implements Initializable {
 //		mainTableColumnStt.setCellValueFactory(new PropertyValueFactory<Transaction, String>("id"));
 		mainTableColumnPrice.setCellValueFactory(new PropertyValueFactory<Transaction, Long>("price"));
 		mainTableColumnNote.setCellValueFactory(new PropertyValueFactory<Transaction, String>("note"));
-		mainTableColumnCreated.setCellValueFactory(new PropertyValueFactory<Transaction, String>("created"));
+		mainTableColumnCreated.setCellValueFactory(new PropertyValueFactory<Transaction, Date>("created"));
 
 		overviewIncome.setText("0");
 		overviewOutcome.setText("0");
 		overviewTotal.setText("0");
 
-		deleteTransactionBtn.setDisable(this.selectedItem == null);
+		ObservableList<Integer> months =
+			    FXCollections.observableArrayList(
+			        1,2,3,4,5,6,7,8,9,10,11,12
+			    );
+		currentMonth = new Date().getMonth() + 1;
+		pickerMonth.setItems(months);
+		pickerMonth.setValue(currentMonth);
+
+		ObservableList<Integer> years =
+			    FXCollections.observableArrayList(
+			        2013,2014,2015,2016
+			    );
+		currentYear = 2015;
+		pickerYear.setItems(years);
+		pickerYear.setValue(currentYear);
+
 		OverviewController that = this;
+		pickerMonth.valueProperty().addListener(new ChangeListener<Integer>() {
+            @Override
+            public void changed(ObservableValue ov, Integer t, Integer t1) {
+               that.currentMonth  = t1;
+               that.loadTableData(that.currentMonth, that.currentYear);
+            }
+        });
+		pickerYear.valueProperty().addListener(new ChangeListener<Integer>() {
+            @Override
+            public void changed(ObservableValue ov, Integer t, Integer t1) {
+               that.currentYear  = t1;
+               that.loadTableData(that.currentMonth, that.currentYear);
+            }
+        });
+
+		deleteTransactionBtn.setDisable(this.selectedItem == null);
 	    mainTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
 	        @Override
 	        public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
 	            //Check whether item is selected and set value of selected item to Label
 	            if(mainTable.getSelectionModel().getSelectedItem() != null)
 	            {
-	               TableViewSelectionModel selectionModel = mainTable.getSelectionModel();
-	               that.selectedItem = (Transaction) selectionModel.getSelectedItem();
+	               TableViewSelectionModel<Transaction> selectionModel = mainTable.getSelectionModel();
+	               that.selectedItem = selectionModel.getSelectedItem();
 	               deleteTransactionBtn.setDisable(that.selectedItem == null);
 	               System.out.println("Selected Value" + that.selectedItem.getId());
 	             } else {
@@ -177,6 +233,11 @@ public class OverviewController implements Initializable {
 //
 //		// Assign the month names as categories for the horizontal axis.
 //        xAxis.setCategories(monthNames);
+
+	    WebView browser = new WebView();
+	    WebEngine webEngine = browser.getEngine();
+	    webEngine.load("http://duyetdev.com");
+
     }
 
 	public void updateOverViewStat(ObservableList<Transaction> transactionData) {

@@ -17,7 +17,7 @@
 				<AnchorPane id="leftPanel" fx:id="leftPanel" minHeight="0.0" minWidth="0.0" prefHeight="498.0" prefWidth="225.0" />
 				<AnchorPane fx:id="rightPanel" minHeight="0.0" minWidth="0.0" prefHeight="160.0">
 					<children>
-						<SplitPane dividerPositions="0.08204334365325078" layoutX="47.0" layoutY="2.0" orientation="VERTICAL" prefHeight="648.0" prefWidth="312.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+						<SplitPane dividerPositions="0.08204334365325078" layoutX="47.0" layoutY="2.0" orientation="VERTICAL" prefHeight="498.0" prefWidth="591.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
 							<items>
 								<HBox minWidth="100.0" prefHeight="77.0" prefWidth="449.0">
 									<children>
@@ -39,14 +39,18 @@
                                     </Button>
                                  </children>
                               </VBox>
-                              <BarChart fx:id="overviewChart" prefHeight="150.0" prefWidth="277.0">
-                                <xAxis>
-                                  <CategoryAxis side="BOTTOM" />
-                                </xAxis>
-                                <yAxis>
-                                  <NumberAxis side="LEFT" />
-                                </yAxis>
-                              </BarChart>
+                              <VBox prefHeight="150.0" prefWidth="323.0">
+                                 <children>
+                                    <WebView fx:id="overviewChart" minHeight="100.0" prefHeight="200.0" prefWidth="200.0" />
+                                    <Pane prefHeight="200.0" prefWidth="200.0">
+                                       <children>
+                                          <ComboBox fx:id="pickerYear" layoutX="131.0" layoutY="4.0" prefHeight="25.0" prefWidth="79.0" promptText="2015" />
+                                          <ComboBox fx:id="pickerMonth" layoutX="43.0" layoutY="4.0" prefHeight="25.0" prefWidth="79.0" promptText="12" />
+                                          <Label layoutY="6.0" text="Tháng" />
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </VBox>
                               <GridPane prefHeight="150.0" prefWidth="217.0">
                                 <columnConstraints>
                                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="88.0" minWidth="10.0" prefWidth="71.0" />
@@ -86,12 +90,11 @@
 								</HBox>
 								<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="525.0" prefWidth="310.0">
 									<children>
-                    										<TableView fx:id="mainTable" layoutX="22.0" layoutY="14.0" prefHeight="590.0" prefWidth="310.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    										<TableView fx:id="mainTable" layoutX="22.0" layoutY="14.0" prefHeight="340.0" prefWidth="589.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     											<columns>
                     												<TableColumn fx:id="mainTableColumnCreated" prefWidth="192.0" text="Ngày tháng" />
                     												<TableColumn fx:id="mainTableColumnPrice" prefWidth="121.0" text="Số tiền" />
-                    												<TableColumn fx:id="mainTableColumnNote" prefWidth="102.0" text="Nội dung" />
-                    												<TableColumn prefWidth="75.0" />
+                    												<TableColumn fx:id="mainTableColumnNote" prefWidth="275.0" text="Nội dung" />
                     											</columns>
                     										</TableView>
 									</children>

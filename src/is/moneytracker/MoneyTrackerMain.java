@@ -257,7 +257,7 @@ public class MoneyTrackerMain extends Application {
 		dialog.getDialogPane().setContent(grid);
 
 		Optional<String> result = dialog.showAndWait();
-		Message.MessageBox(result.toString());
+		// Message.MessageBox(result.toString());
 	}
 
 	public Scene getMainScene() {

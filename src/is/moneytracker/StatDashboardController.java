@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.mapping.List;
 import org.hibernate.transform.Transformers;
@@ -78,6 +79,9 @@ public class StatDashboardController implements Initializable {
 	@FXML private Button cat_submit;
 	@FXML private Button editBtn;
 
+	@FXML private ComboBox<Integer> pickerYear;
+	@FXML private ComboBox<Integer> pickerMonth;
+
 	private FXMLLoader loader;
 
 	@FXML private TableView<TransactionByCategory> mainTable;
@@ -90,6 +94,8 @@ public class StatDashboardController implements Initializable {
 	@FXML private TableColumn<TransactionByCategory, Long> mainTableColumnTotal;
 
 	Category selectedItem;
+	private int currentMonth;
+	private int currentYear;
 
 	/**
 	 * Constructor
@@ -113,10 +119,16 @@ public class StatDashboardController implements Initializable {
 		this.setMainApp(mainApp);
 
 		// Load data
-		loadTableData();
+		currentMonth = new Date().getMonth() + 1;
+		currentYear = 2015;
+		loadTableData(currentMonth, currentYear);
 	}
 
 	public void loadTableData() {
+		loadTableData(-1, -1);
+	}
+
+	public void loadTableData(int month, int year) {
 //
 //		SELECT categories.id, categories.name,
 //		SUM(CASE WHEN transactions.price < 0 THEN transactions.price  ELSE 0 END) as outcome,
@@ -133,14 +145,19 @@ public class StatDashboardController implements Initializable {
 		org.hibernate.Transaction tx = null;
 		try {
 			tx = session.beginTransaction();
+			String sql = "SELECT categories.id, categories.name, " +
+					"SUM(CASE WHEN transactions.price < 0 THEN transactions.price  ELSE 0 END) as outcome, " +
+					"SUM(CASE WHEN transactions.price > 0 THEN transactions.price  ELSE 0 END) as income, " +
+					"SUM(transactions.price) as total " +
+					"FROM transactions, categories " +
+					"WHERE transactions.category_id = categories.id " +
+					(month > 0 && year > 0 ? "AND MONTH(created) = :month AND YEAR(created) = :year " : " AND (:month = :month AND :year = :year)") +
+					"GROUP BY categories.id";
+
 			@SuppressWarnings("unchecked")
-			java.util.List<TransactionByCategory> trans = session.createSQLQuery("SELECT categories.id, categories.name, " +
-				"SUM(CASE WHEN transactions.price < 0 THEN transactions.price  ELSE 0 END) as outcome, " +
-				"SUM(CASE WHEN transactions.price > 0 THEN transactions.price  ELSE 0 END) as income, " +
-				"SUM(transactions.price) as total " +
-				"FROM transactions, categories " +
-				"WHERE transactions.category_id = categories.id " +
-				"GROUP BY categories.id")
+			java.util.List<TransactionByCategory> trans = ((SQLQuery) session.createSQLQuery(sql)
+			.setParameter("month", month)
+			.setParameter("year", year))
 			.addScalar("id", new IntegerType())
 		    .addScalar("name", new StringType())
 		    .addScalar("outcome", new IntegerType())
@@ -172,7 +189,39 @@ public class StatDashboardController implements Initializable {
 		mainTableColumnIncome.setCellValueFactory(new PropertyValueFactory<TransactionByCategory, Long>("income"));
 		mainTableColumnOutcome.setCellValueFactory(new PropertyValueFactory<TransactionByCategory, Long>("outcome"));
 		mainTableColumnTotal.setCellValueFactory(new PropertyValueFactory<TransactionByCategory, Long>("total"));
-    }
+
+		ObservableList<Integer> months =
+			    FXCollections.observableArrayList(
+			        1,2,3,4,5,6,7,8,9,10,11,12
+			    );
+
+		pickerMonth.setItems(months);
+		pickerMonth.setValue(currentMonth);
+
+		ObservableList<Integer> years =
+			    FXCollections.observableArrayList(
+			        2013,2014,2015,2016
+			    );
+
+		pickerYear.setItems(years);
+		pickerYear.setValue(currentYear);
+
+		StatDashboardController that = this;
+		pickerMonth.valueProperty().addListener(new ChangeListener<Integer>() {
+            @Override
+            public void changed(ObservableValue ov, Integer t, Integer t1) {
+               that.currentMonth  = t1;
+               that.loadTableData(that.currentMonth, that.currentYear);
+            }
+        });
+		pickerYear.valueProperty().addListener(new ChangeListener<Integer>() {
+            @Override
+            public void changed(ObservableValue ov, Integer t, Integer t1) {
+               that.currentYear  = t1;
+               that.loadTableData(that.currentMonth, that.currentYear);
+            }
+        });
+	}
 
 	public void delCat() {
 		if (this.selectedItem != null) {
