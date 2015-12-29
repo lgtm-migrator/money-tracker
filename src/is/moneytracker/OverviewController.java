@@ -75,7 +75,7 @@ public class OverviewController implements Initializable {
 	@FXML private Button toggleAddButton;
 	@FXML private Button deleteTransactionBtn;
 
-	@FXML private BarChart<String, Integer> overviewChart;
+// 	@FXML private BarChart<String, Integer> overviewChart;
 //    @FXML private CategoryAxis xAxis;
     private ObservableList<String> monthNames = FXCollections.observableArrayList();
 
@@ -234,9 +234,6 @@ public class OverviewController implements Initializable {
 //		// Assign the month names as categories for the horizontal axis.
 //        xAxis.setCategories(monthNames);
 
-	    WebView browser = new WebView();
-	    WebEngine webEngine = browser.getEngine();
-	    webEngine.load("http://duyetdev.com");
 
     }
 
